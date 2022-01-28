@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "997168755758",
+    "project_id": "esoft-sistemas",
+    "storage_bucket": "esoft-sistemas.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:997168755758:android:c6cc89c31b1c6e95395bbf",
+        "android_client_info": {
+          "package_name": "com.challange.esoft.desafio_esoft"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "997168755758-5em2ua34lplqev4sbmgafsj08lqsrm4l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4rYlJD4d6DMQkarV359u_Y9664jsbOuM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "997168755758-5em2ua34lplqev4sbmgafsj08lqsrm4l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
