@@ -2,18 +2,19 @@
 import 'package:flutter/material.dart';
 
 // import dos pacotes
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:find_dropdown/find_dropdown.dart';
 
-// import dos modelos
-import 'package:desafio_esoft/core/models/anotations.dart';
+// import dos telas
+import 'package:desafio_esoft/views/widgets/message_widget.dart';
 
 class CreateTask extends StatefulWidget {
 
   final int? id;
   final String? title;
   final String? description;
-  final bool? status;
+  final int? status;
   final int type;
   final int total;
   const CreateTask({ Key? key, required this.type, required this.total, this.id, this.title, this.description, this.status }) : super(key: key);
@@ -31,14 +32,18 @@ class _CreateTaskState extends State<CreateTask> {
   // variaveis da tela
   final CollectionReference _firestore = FirebaseFirestore.instance.collection("annotations");
   String _typeStatus = "";
-  bool? _status;
+  int? _status;
 
   // inserir os campos
   _insertField() {
+    if ( widget.status == 1 ) {
+      _status = 1;
+    } else {
+      _status = 0;
+    }
     _controllerTitle.text = widget.title!;
     _controllerDescription.text = widget.description!;
-    _status = widget.status!;
-    if ( widget.status == true ) {
+    if ( widget.status == 1 ) {
       _typeStatus = "Ativa";
     } else {
       _typeStatus = "Finalizada";
@@ -49,7 +54,7 @@ class _CreateTaskState extends State<CreateTask> {
   _validateFields() {
 
     if ( _status == null ) {
-      print("selecione um status");
+      CustomSnackBar(context, "Selecione um status para a tarefa", Colors.red);
     } else {
 
       var data = {
@@ -60,10 +65,16 @@ class _CreateTaskState extends State<CreateTask> {
         "created_at": DateTime.now().toString(),
         "updated_at": "null",
       };
-      print("data create => $data");
+
       _firestore.add(data)
-        .then((value) => Navigator.pop(context))
-        .catchError((error) => print("$error"));
+        .then((value) {
+          CustomSnackBar(context, "Tarefa cadastrada com sucesso", Colors.green);
+          Navigator.pop(context);
+        })
+        .catchError((error) {
+            FirebaseCrashlytics.instance.log(error.toString());
+            CustomSnackBar(context, "Não foi possível cadastrar sua tarefa, tente novamente mais tarde", Colors.red);
+        });
 
     }
   }
@@ -72,7 +83,7 @@ class _CreateTaskState extends State<CreateTask> {
   _validateUpdate() {
 
     if ( _status == null ) {
-      print("selecione um status para a sua tarefa");
+      CustomSnackBar(context, "Selecione um status para a tarefa", Colors.red);
     } else {
 
       _firestore.where("id", isEqualTo: widget.id).get().then((snapshot) {
@@ -85,7 +96,10 @@ class _CreateTaskState extends State<CreateTask> {
 
         for ( var item in snapshot.docs ) {
           item.reference.update(response)
-            .then((value) => Navigator.pop(context));
+            .then((value) {
+                CustomSnackBar(context, "Tarefa atualizada com sucesso", Colors.green);
+                Navigator.pop(context);
+            });
         }
       });
 
@@ -208,9 +222,9 @@ class _CreateTaskState extends State<CreateTask> {
 
                   _typeStatus = type.toString();
                   if ( type == "Ativa" ) {
-                    _status = true;
+                    _status = 1;
                   } else {
-                    _status = false;
+                    _status = 0;
                   }
                 },
                 // faz a exibição da quantidade de tickets disponíveis
@@ -251,14 +265,16 @@ class _CreateTaskState extends State<CreateTask> {
 
             // cadastrar
             Padding(
-              padding: const EdgeInsets.only(top: 16, bottom: 10),
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 10),
               child: ElevatedButton(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Text(
-                      "Cadastrar",
-                      style: TextStyle(
+                      ( widget.type == 0 )
+                      ? "Cadastrar"
+                      : "Atualizar",
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 20,
                       ),

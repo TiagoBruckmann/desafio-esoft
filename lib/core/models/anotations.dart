@@ -4,11 +4,11 @@ class ModelAnnotations {
   int? id;
   String? title;
   String? description;
-  bool status = true; // true - aberto, false - finalizado
+  int? status; // 1 - aberto, 0 - finalizado
   String? createdAt;
   String? updatedAt;
 
-  ModelAnnotations({ this.id, this.title, this.description, required this.status, this.createdAt, this.updatedAt });
+  ModelAnnotations({ this.id, this.title, this.description, this.status, this.createdAt, this.updatedAt });
 
   ModelAnnotations.complete( this.id, this.title, this.description, this.status, this.createdAt, this.updatedAt );
 
