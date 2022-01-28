@@ -3,7 +3,7 @@ import 'package:desafio_esoft/blocs/anotations.bloc.dart';
 import 'package:test/test.dart' as test_functions;
 
 // import dos modelos
-import 'package:desafio_esoft/core/models/anotations.dart';
+import 'package:desafio_esoft/core/models/annotations.dart';
 
 void main() async {
 

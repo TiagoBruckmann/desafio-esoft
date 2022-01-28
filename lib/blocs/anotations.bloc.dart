@@ -2,7 +2,7 @@
 import 'dart:async';
 
 // import dos modelos
-import 'package:desafio_esoft/core/models/anotations.dart';
+import 'package:desafio_esoft/core/models/annotations.dart';
 
 class AnnotationBloc {
 

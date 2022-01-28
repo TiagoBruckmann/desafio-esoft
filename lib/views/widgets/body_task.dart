@@ -1,20 +1,19 @@
 // imports nativos do flutter
-import 'dart:async';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:desafio_esoft/blocs/anotations.bloc.dart';
-import 'package:desafio_esoft/views/widgets/message_widget.dart';
-import 'package:desafio_esoft/views/widgets/refresh/refresh_widget.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 // import dos pacotes
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 // import dos modelos
-import 'package:desafio_esoft/core/models/anotations.dart';
+import 'package:desafio_esoft/core/models/annotations.dart';
 import 'package:desafio_esoft/core/styles/app_colors.dart';
+import 'package:desafio_esoft/blocs/anotations.bloc.dart';
 
 // import das telas
+import 'package:desafio_esoft/views/widgets/refresh/refresh_widget.dart';
+import 'package:desafio_esoft/views/widgets/message_widget.dart';
 import 'package:desafio_esoft/views/create_task.dart';
 
 class BodyTask extends StatefulWidget {
